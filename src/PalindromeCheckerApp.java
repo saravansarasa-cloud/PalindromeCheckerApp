@@ -1,30 +1,24 @@
 public class PalindromeCheckerApp {
 
-    // recursive method
-    public static boolean isPalindrome(String str, int start, int end) {
-
-        // base condition
-        if (start >= end) {
-            return true;
-        }
-
-        // if characters are not equal
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-
-        // recursive call
-        return isPalindrome(str, start + 1, end - 1);
-    }
-
     public static void main(String[] args) {
 
-        String word = "level";
+        String input = "Never Odd Or Even";
 
-        if (isPalindrome(word, 0, word.length() - 1)) {
-            System.out.println(word + " is a Palindrome");
+        // normalize string (remove spaces and convert to lowercase)
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+        String reversed = "";
+
+        // reverse the normalized string
+        for (int i = normalized.length() - 1; i >= 0; i--) {
+            reversed = reversed + normalized.charAt(i);
+        }
+
+        // compare strings
+        if (normalized.equals(reversed)) {
+            System.out.println(input + " is a Palindrome");
         } else {
-            System.out.println(word + " is not a Palindrome");
+            System.out.println(input + " is not a Palindrome");
         }
     }
 }
