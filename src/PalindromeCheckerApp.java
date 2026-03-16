@@ -1,14 +1,21 @@
 import java.util.*;
 
-// Strategy Interface
-interface PalindromeStrategy {
-    boolean isPalindrome(String word);
-}
+public class PalindromeCheckerApp {
 
-// Stack Strategy
-class StackStrategy implements PalindromeStrategy {
+    // Method 1: Reverse String
+    public static boolean reverseMethod(String word) {
 
-    public boolean isPalindrome(String word) {
+        String reversed = "";
+
+        for (int i = word.length() - 1; i >= 0; i--) {
+            reversed = reversed + word.charAt(i);
+        }
+
+        return word.equals(reversed);
+    }
+
+    // Method 2: Stack
+    public static boolean stackMethod(String word) {
 
         Stack<Character> stack = new Stack<>();
 
@@ -24,12 +31,9 @@ class StackStrategy implements PalindromeStrategy {
 
         return word.equals(reversed);
     }
-}
 
-// Deque Strategy
-class DequeStrategy implements PalindromeStrategy {
-
-    public boolean isPalindrome(String word) {
+    // Method 3: Deque
+    public static boolean dequeMethod(String word) {
 
         Deque<Character> deque = new LinkedList<>();
 
@@ -38,7 +42,6 @@ class DequeStrategy implements PalindromeStrategy {
         }
 
         while (deque.size() > 1) {
-
             if (deque.removeFirst() != deque.removeLast()) {
                 return false;
             }
@@ -46,38 +49,28 @@ class DequeStrategy implements PalindromeStrategy {
 
         return true;
     }
-}
-
-// Context Class
-class PalindromeChecker {
-
-    private PalindromeStrategy strategy;
-
-    public PalindromeChecker(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public boolean check(String word) {
-        return strategy.isPalindrome(word);
-    }
-}
-
-// Main Class
-public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String word = "madam";
+        String word = "racecar";
 
-        // choose strategy dynamically
-        PalindromeStrategy strategy = new StackStrategy();
+        // Reverse method timing
+        long start1 = System.nanoTime();
+        reverseMethod(word);
+        long end1 = System.nanoTime();
 
-        PalindromeChecker checker = new PalindromeChecker(strategy);
+        // Stack method timing
+        long start2 = System.nanoTime();
+        stackMethod(word);
+        long end2 = System.nanoTime();
 
-        if (checker.check(word)) {
-            System.out.println(word + " is a Palindrome");
-        } else {
-            System.out.println(word + " is not a Palindrome");
-        }
+        // Deque method timing
+        long start3 = System.nanoTime();
+        dequeMethod(word);
+        long end3 = System.nanoTime();
+
+        System.out.println("Reverse Method Time: " + (end1 - start1) + " ns");
+        System.out.println("Stack Method Time: " + (end2 - start2) + " ns");
+        System.out.println("Deque Method Time: " + (end3 - start3) + " ns");
     }
 }
