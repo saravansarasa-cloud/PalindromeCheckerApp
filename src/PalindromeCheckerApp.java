@@ -1,30 +1,69 @@
-import java.util.Deque;
-import java.util.LinkedList;
-
 public class PalindromeCheckerApp {
+
+    // Node class for singly linked list
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     public static void main(String[] args) {
 
-        String word = "racecar";
+        String word = "madam";
 
-        Deque<Character> deque = new LinkedList<>();
+        // convert string to linked list
+        Node head = null;
+        Node tail = null;
 
-        // insert characters into deque
         for (int i = 0; i < word.length(); i++) {
-            deque.addLast(word.charAt(i));
+            Node newNode = new Node(word.charAt(i));
+
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
+
+        // find middle using slow and fast pointer
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // reverse second half
+        Node prev = null;
+        Node current = slow;
+
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+
+        // compare both halves
+        Node firstHalf = head;
+        Node secondHalf = prev;
 
         boolean isPalindrome = true;
 
-        // compare front and rear elements
-        while (deque.size() > 1) {
-            char first = deque.removeFirst();
-            char last = deque.removeLast();
-
-            if (first != last) {
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data) {
                 isPalindrome = false;
                 break;
             }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
         }
 
         if (isPalindrome) {
