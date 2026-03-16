@@ -1,24 +1,30 @@
+class PalindromeChecker {
+
+    // method to check palindrome
+    public boolean checkPalindrome(String word) {
+
+        String reversed = "";
+
+        for (int i = word.length() - 1; i >= 0; i--) {
+            reversed = reversed + word.charAt(i);
+        }
+
+        return word.equals(reversed);
+    }
+}
+
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String input = "Never Odd Or Even";
+        String word = "level";
 
-        // normalize string (remove spaces and convert to lowercase)
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        PalindromeChecker checker = new PalindromeChecker();
 
-        String reversed = "";
-
-        // reverse the normalized string
-        for (int i = normalized.length() - 1; i >= 0; i--) {
-            reversed = reversed + normalized.charAt(i);
-        }
-
-        // compare strings
-        if (normalized.equals(reversed)) {
-            System.out.println(input + " is a Palindrome");
+        if (checker.checkPalindrome(word)) {
+            System.out.println(word + " is a Palindrome");
         } else {
-            System.out.println(input + " is not a Palindrome");
+            System.out.println(word + " is not a Palindrome");
         }
     }
 }
